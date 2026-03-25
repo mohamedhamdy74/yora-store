@@ -1,4 +1,5 @@
 import { ProductRepository } from "@/lib/repositories/product.repository";
+import { deleteProductAction } from "@/lib/actions/product.actions";
 import Link from "next/link";
 import { PlusCircle, Edit, Trash2, Package } from "lucide-react";
 
@@ -42,12 +43,17 @@ export default async function ProductsDashboardPage() {
                 )}
               </div>
               <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-1.5 rounded-[1rem] border border-slate-100 dark:border-white/5">
-                <button className="p-2.5 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-white/5 rounded-xl transition-all shadow-sm">
+                <Link href={`/dashboard/products/${product.id}/edit`} className="p-2.5 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-white/5 rounded-xl transition-all shadow-sm">
                   <Edit size={18} />
-                </button>
-                <button className="p-2.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-white dark:hover:bg-white/5 rounded-xl transition-all shadow-sm">
-                  <Trash2 size={18} />
-                </button>
+                </Link>
+                <form action={async () => {
+                  "use server";
+                  await deleteProductAction(product.id);
+                }}>
+                  <button type="submit" className="p-2.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-white dark:hover:bg-white/5 rounded-xl transition-all shadow-sm">
+                    <Trash2 size={18} />
+                  </button>
+                </form>
               </div>
             </div>
             

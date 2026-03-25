@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { createCategoryAction } from "@/lib/actions/category.actions";
+import { createCategoryAction, updateCategoryAction } from "@/lib/actions/category.actions";
 import { useRouter } from "next/navigation";
 import { Save, Layers } from "lucide-react";
 import Link from "next/link";
 
-export function CategoryForm() {
+export function CategoryForm({ initialData }: { initialData?: { id: string, name: string } }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,10 @@ export function CategoryForm() {
     const formData = new FormData(e.currentTarget);
 
     startTransition(async () => {
-      const result = await createCategoryAction(formData);
+      const result = initialData 
+        ? await updateCategoryAction(initialData.id, formData)
+        : await createCategoryAction(formData);
+        
       if (result.error) {
         setError(result.error);
       } else {
@@ -47,6 +50,7 @@ export function CategoryForm() {
           <input 
             required
             name="name"
+            defaultValue={initialData?.name || ""}
             placeholder="مثال: واقي شاشة (Screen Protectors)"
             className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all font-medium"
           />
@@ -70,7 +74,7 @@ export function CategoryForm() {
           ) : (
             <Save size={20} className="group-hover:scale-110 transition-transform" />
           )}
-          {isPending ? "جاري الحفظ..." : "حفظ القسم"}
+          {isPending ? "جاري الحفظ..." : initialData ? "حفظ التعديلات" : "حفظ القسم"}
         </button>
       </div>
     </form>

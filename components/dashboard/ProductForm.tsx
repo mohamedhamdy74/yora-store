@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { createProductAction } from "@/lib/actions/product.actions";
+import { createProductAction, updateProductAction } from "@/lib/actions/product.actions";
 import { useRouter } from "next/navigation";
 import { Save, Tag, AlignLeft, DollarSign, Box, Layers, ImagePlus, X, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -12,13 +12,23 @@ type Category = {
   name: string;
 };
 
-export function ProductForm({ categories }: { categories: Category[] }) {
+type ProductData = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  images: string[];
+  categoryId: string;
+};
+
+export function ProductForm({ categories, initialData }: { categories: Category[], initialData?: ProductData }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
   // Cloudinary image upload states
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(initialData?.images || []);
   const [isUploading, setIsUploading] = useState(false);
 
   // Function to handle image upload directly to Cloudinary
@@ -72,7 +82,10 @@ export function ProductForm({ categories }: { categories: Category[] }) {
     formData.append("images", JSON.stringify(images));
 
     startTransition(async () => {
-      const result = await createProductAction(formData);
+      const result = initialData 
+        ? await updateProductAction(initialData.id, formData)
+        : await createProductAction(formData);
+        
       if (result?.error) {
         setError(result.error);
       } else {
@@ -177,7 +190,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
               <select 
                 required
                 name="categoryId"
-                defaultValue=""
+                defaultValue={initialData?.categoryId || ""}
                 className="w-full appearance-none bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all font-medium"
               >
                 <option value="" disabled>اختر القسم المناسب...</option>
@@ -200,6 +213,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
           <textarea 
             required
             name="description"
+            defaultValue={initialData?.description || ""}
             rows={5}
             placeholder="اكتب وصفاً جذاباً وتفصيلياً للمنتج يلفت انتباه العملاء..."
             className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium resize-none"
@@ -217,6 +231,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
               type="number"
               step="0.01"
               name="price"
+              defaultValue={initialData?.price || ""}
               placeholder="0.00"
               className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all font-bold tracking-wider"
             />
@@ -231,6 +246,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
               required
               type="number"
               name="stock"
+              defaultValue={initialData?.stock || ""}
               placeholder="مثال: 50"
               className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all font-bold tracking-wider"
             />
@@ -255,7 +271,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
           ) : (
             <Save size={20} className="group-hover:scale-110 transition-transform" />
           )}
-          {isPending ? "جاري الحفظ..." : "حفظ المنتج ورفعه"}
+          {isPending ? "جاري الحفظ..." : initialData ? "حفظ التعديلات" : "حفظ المنتج ورفعه"}
         </button>
       </div>
     </form>

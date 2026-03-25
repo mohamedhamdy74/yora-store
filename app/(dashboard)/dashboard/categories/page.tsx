@@ -1,4 +1,5 @@
 import { CategoryRepository } from "@/lib/repositories/category.repository";
+import { deleteCategoryAction } from "@/lib/actions/category.actions";
 import Link from "next/link";
 import { PlusCircle, Edit, Trash2, Layers } from "lucide-react";
 
@@ -37,12 +38,17 @@ export default async function CategoriesDashboardPage() {
                                 <Layers size={32} />
                             </div>
                             <div className="flex items-center gap-2">
-                                <button className="p-2.5 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-colors">
+                                <Link href={`/dashboard/categories/${cat.id}/edit`} className="p-2.5 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-colors">
                                     <Edit size={20} />
-                                </button>
-                                <button className="p-2.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-colors">
-                                    <Trash2 size={20} />
-                                </button>
+                                </Link>
+                                <form action={async () => {
+                                    "use server";
+                                    await deleteCategoryAction(cat.id);
+                                }}>
+                                    <button type="submit" className="p-2.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-colors">
+                                        <Trash2 size={20} />
+                                    </button>
+                                </form>
                             </div>
                         </div>
 

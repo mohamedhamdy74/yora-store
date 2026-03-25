@@ -41,3 +41,19 @@ export async function deleteCategoryAction(id: string) {
     return { error: error.message || "Failed to delete category" };
   }
 }
+
+export async function updateCategoryAction(id: string, formData: FormData) {
+  try {
+    const name = formData.get("name") as string;
+    if (!name) return { error: "Category name is required" };
+
+    const category = await CategoryRepository.update(id, { name });
+    
+    revalidatePath("/dashboard", "layout");
+    revalidatePath("/", "layout");
+    
+    return { success: true, data: category };
+  } catch (error: any) {
+    return { error: error.message || "Failed to update category" };
+  }
+}
