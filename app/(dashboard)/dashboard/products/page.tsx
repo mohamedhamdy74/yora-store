@@ -60,8 +60,8 @@ export default async function ProductsDashboardPage() {
               </div>
               
               <div className="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-5">
-                 <span className={`px-4 py-2 rounded-xl text-xs font-black ${product.inStock ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20' : 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400 border border-rose-100 dark:border-rose-500/20'}`}>
-                    {product.inStock ? 'متوفرة للبيع' : 'نفذت الكمية'}
+                 <span className={`px-4 py-2 rounded-xl text-xs font-black ${product.stock > 0 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20' : 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400 border border-rose-100 dark:border-rose-500/20'}`}>
+                    {product.stock > 0 ? 'متوفرة للبيع' : 'نفذت الكمية'}
                  </span>
                  <span className="text-sm font-bold text-slate-400 flex items-center gap-2">
                    المخزون: <span className="text-slate-700 dark:text-white">{product.stock}</span>
