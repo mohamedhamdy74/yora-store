@@ -24,7 +24,7 @@ export default async function ProductPage(props: { params: Promise<{ id: string 
   }
 
   // The client WhatsApp number mapped dynamically from ENV variables; fallbacks if null.
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
 
   return (
     <div className="min-h-screen bg-[#060a11] text-white font-sans selection:bg-blue-500/30 pt-28">
