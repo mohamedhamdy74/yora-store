@@ -12,6 +12,11 @@ const cairo = Cairo({
 export const metadata: Metadata = {
   title: "Yora Store",
   description: "متجر يورا لاكسسوارات الموبايل",
+  icons: {
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({
