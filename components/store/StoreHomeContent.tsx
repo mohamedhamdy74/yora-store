@@ -44,7 +44,7 @@ export function StoreHomeContent({ products }: { products: any[] }) {
               className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent pointer-events-none "
             />
             <ShieldCheck size={16} className="text-blue-500" />
-            <span className="text-sm font-bold text-blue-200 tracking-wide">الخيار رقم واحد لإكسسوارات موبايلك  </span>
+            <span className="text-sm font-bold text-blue-200 tracking-wide">  أفضل جودة بأفضل سعر!  Yora بتوصلك لحد باب البيت    </span>
           </motion.div>
 
           <motion.h1
