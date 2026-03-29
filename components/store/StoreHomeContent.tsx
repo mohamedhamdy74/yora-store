@@ -3,6 +3,7 @@
 import { ShoppingBag, ArrowLeft, ShieldCheck, Truck, Clock, HeadphonesIcon, Smartphone } from "lucide-react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 export function StoreHomeContent({ products }: { products: any[] }) {
   const { scrollYProgress } = useScroll();
@@ -43,10 +44,10 @@ export function StoreHomeContent({ products }: { products: any[] }) {
               className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent pointer-events-none "
             />
             <ShieldCheck size={16} className="text-blue-500" />
-            <span className="text-sm font-bold text-blue-200 tracking-wide">الخيار رقم 1 لإكسسوارات الموبايل في أسوان</span>
+            <span className="text-sm font-bold text-blue-200 tracking-wide">الخيار رقم واحد لإكسسوارات موبايلك  </span>
           </motion.div>
 
-          <motion.h1 
+          <motion.h1
             initial="hidden"
             animate="visible"
             variants={{
@@ -58,24 +59,24 @@ export function StoreHomeContent({ products }: { products: any[] }) {
             className="text-7xl sm:text-[8rem] md:text-[10rem] lg:text-[12rem] font-black tracking-normal mb-8 flex items-center justify-center gap-2 md:gap-6 relative leading-none z-20"
           >
             {"YORA".split("").map((letter, index) => (
-              <motion.span 
-                key={index} 
+              <motion.span
+                key={index}
                 variants={{
                   hidden: { opacity: 0, y: 150, rotateX: 90, scale: 0.8, filter: "blur(20px)" },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
-                    rotateX: 0, 
-                    scale: 1, 
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    rotateX: 0,
+                    scale: 1,
                     filter: "blur(0px)",
-                    transition: { type: "spring", damping: 14, stiffness: 100 } 
+                    transition: { type: "spring", damping: 14, stiffness: 100 }
                   },
                 }}
                 className="inline-block relative text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500 drop-shadow-[0_20px_40px_rgba(255,255,255,0.15)]"
               >
                 {letter}
                 {/* Secondary Luminous Flare hitting each letter individually */}
-                <motion.span 
+                <motion.span
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: [0, 0.8, 0], scale: [0, 2, 0] }}
                   transition={{ delay: 1.2 + index * 0.15, duration: 1, ease: "easeInOut" }}
@@ -83,9 +84,9 @@ export function StoreHomeContent({ products }: { products: any[] }) {
                 />
               </motion.span>
             ))}
-            
+
             {/* Hologram Light Sweep Effect */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: "-100%" }}
               animate={{ opacity: [0, 0.5, 0], x: "100%" }}
               transition={{ delay: 2, duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 6 }}
@@ -95,7 +96,7 @@ export function StoreHomeContent({ products }: { products: any[] }) {
 
           <div className="border-t border-white/5 pt-8 mb-12 max-w-3xl mx-auto flex flex-col items-center">
             <div dir="ltr" className="text-2xl md:text-3xl font-medium leading-relaxed flex flex-wrap justify-center gap-3">
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
                 animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.8, delay: 1.8, ease: "easeOut" }}
@@ -103,7 +104,7 @@ export function StoreHomeContent({ products }: { products: any[] }) {
               >
                 Smart Accessories.
               </motion.span>
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
                 animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.8, delay: 2.2, ease: "easeOut" }}
@@ -112,8 +113,8 @@ export function StoreHomeContent({ products }: { products: any[] }) {
                 Smart Choice.
               </motion.span>
             </div>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2.6 }}
@@ -124,7 +125,7 @@ export function StoreHomeContent({ products }: { products: any[] }) {
             </motion.p>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 3.0 }}
@@ -212,13 +213,18 @@ export function StoreHomeContent({ products }: { products: any[] }) {
                 <div className="relative aspect-square w-full bg-[#030508] overflow-hidden p-6 flex flex-col items-center justify-center">
                   {product.images?.[0] ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <motion.img
+                    <motion.div
                       whileHover={{ scale: 1.1, rotate: -3 }}
                       transition={{ duration: 0.5 }}
-                      src={product.images[0]}
-                      alt={product.name}
-                      className="w-full h-full object-contain filter drop-shadow-2xl"
-                    />
+                      className="w-full h-full object-contain relative filter drop-shadow-2xl"
+                    >
+                      <Image
+                        src={product.images[0]}
+                        alt={product.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </motion.div>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center shrink-0">
                       <span className="text-slate-800 font-black text-6xl opacity-30 -rotate-12 group-hover:scale-110 transition-transform duration-700">YORA</span>
@@ -234,10 +240,18 @@ export function StoreHomeContent({ products }: { products: any[] }) {
                   <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-blue-400 transition-colors">{product.name}</h3>
                   <p className="text-slate-400 text-sm line-clamp-2 leading-relaxed mb-6 font-medium">{product.description}</p>
                   <div className="mt-auto flex items-center justify-between">
-                    <span className="text-3xl font-black text-white flex items-end gap-1">
-                      {product.price} <span className="text-base text-blue-500 mb-1">ج.م</span>
-                    </span>
-                    <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 hover:scale-110 shadow-sm">
+                    <div className="flex flex-col">
+                      <span className="text-3xl font-black text-white flex items-end gap-1">
+                        {product.price} <span className="text-base text-blue-500 mb-1">ج.م</span>
+                      </span>
+                      {(product as any).oldPrice && (product as any).oldPrice > product.price && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-sm text-slate-500 line-through">{(product as any).oldPrice}</span>
+                          <span className="text-xs bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-md font-bold text-nowrap">خصم {Math.round((((product as any).oldPrice - product.price) / (product as any).oldPrice) * 100)}%</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 text-slate-300 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 hover:scale-110 shadow-sm">
                       <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -250,8 +264,9 @@ export function StoreHomeContent({ products }: { products: any[] }) {
 
       {/* --- Footer Area --- */}
       <footer className="py-16 text-center text-slate-500 font-medium relative z-10 bg-[#030508]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.jpg" alt="YORA Logo" className="h-12 w-auto object-contain mx-auto mb-6 rounded-lg opacity-40 grayscale hover:opacity-100 transition-opacity duration-500" />
+        <div className="relative h-12 w-32 mx-auto mb-6 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500">
+          <Image src="/logo.jpg" alt="YORA Logo" fill className="object-contain rounded-lg" />
+        </div>
         <p>© {new Date().getFullYear()} Yora Store. جميع الحقوق محفوظة المتجر الأفضل في أسوان.</p>
       </footer>
     </div>

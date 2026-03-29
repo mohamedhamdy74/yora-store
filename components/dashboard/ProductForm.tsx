@@ -17,6 +17,7 @@ type ProductData = {
   name: string;
   description: string;
   price: number;
+  oldPrice?: number | null;
   stock: number;
   images: string[];
   categoryId: string;
@@ -128,8 +129,7 @@ export function ProductForm({ categories, initialData }: { categories: Category[
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-4">
             {images.map((url, index) => (
               <div key={index} className="relative aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 group">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={url} alt={`صورة المنتج ${index + 1}`} className="w-full h-full object-cover" />
+                <Image src={url} alt={`صورة المنتج ${index + 1}`} fill className="object-cover" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <button 
                     type="button" 
@@ -176,6 +176,7 @@ export function ProductForm({ categories, initialData }: { categories: Category[
             <input 
               required
               name="name"
+              defaultValue={initialData?.name || ""}
               placeholder="مثال: كفر حماية ايفون 15 برو ماكس"
               className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium"
             />
@@ -220,7 +221,7 @@ export function ProductForm({ categories, initialData }: { categories: Category[
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
           <div className="space-y-3">
             <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
               <DollarSign size={18} className="text-emerald-500" />
@@ -234,6 +235,21 @@ export function ProductForm({ categories, initialData }: { categories: Category[
               defaultValue={initialData?.price || ""}
               placeholder="0.00"
               className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all font-bold tracking-wider"
+            />
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+              <DollarSign size={18} className="text-rose-500" />
+              السعر القديم (اختياري)
+            </label>
+            <input 
+              type="number"
+              step="0.01"
+              name="oldPrice"
+              defaultValue={initialData?.oldPrice || ""}
+              placeholder="0.00"
+              className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition-all font-bold tracking-wider"
             />
           </div>
 

@@ -6,6 +6,7 @@ import { ChevronRight, ChevronLeft, ShoppingCart, ShieldCheck, Truck, RotateCcw,
 import Link from "next/link";
 import { useCart } from "./CartContext";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 type ProductWithCategory = Product & { category: Category | null };
 
@@ -95,14 +96,18 @@ ${formData.address}
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
               {hasImages ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <motion.img
-                  src={product.images[currentImageIndex]}
-                  alt={product.name}
+                <motion.div
                   animate={{ y: [0, -25, 0], rotate: [0, 2, 0] }}
                   transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-                  className="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:scale-110 transition-transform duration-700 relative z-10"
-                />
+                  className="relative w-full h-full filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:scale-110 transition-transform duration-700 z-10"
+                >
+                  <Image
+                    src={product.images[currentImageIndex]}
+                    alt={product.name}
+                    fill
+                    className="object-contain"
+                  />
+                </motion.div>
               ) : (
                 <motion.div
                   animate={{ y: [0, -20, 0] }}
@@ -146,8 +151,7 @@ ${formData.address}
                     onClick={() => setCurrentImageIndex(idx)}
                     className={`relative w-24 h-24 rounded-2xl overflow-hidden bg-[#0A0F1C]/40 backdrop-blur-xl border border-white/10 transition-all duration-300 shrink-0 ${idx === currentImageIndex ? 'ring-2 ring-blue-500 opacity-100' : 'opacity-50 hover:opacity-100 hover:-translate-y-1'}`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <Image src={img} alt="" fill className="object-cover" />
                   </button>
                 ))}
               </div>
@@ -167,13 +171,23 @@ ${formData.address}
               </div>
             )}
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
               {product.name}
             </h1>
 
-            <div className="flex items-end gap-3 mb-8">
-              <span className="text-5xl font-black text-white drop-shadow-[0_0_20px_rgba(59,130,246,0.3)]">{product.price}</span>
-              <span className="text-xl text-blue-400 font-bold mb-1">جنيه مصري</span>
+            <div className="flex flex-col gap-2 mb-8">
+              <div className="flex items-end gap-3">
+                <span className="text-5xl font-black text-white drop-shadow-[0_0_20px_rgba(59,130,246,0.3)]">{product.price}</span>
+                <span className="text-xl text-blue-400 font-bold mb-1">جنيه مصري</span>
+              </div>
+              {(product as any).oldPrice && (product as any).oldPrice > product.price && (
+                <div className="flex items-center gap-3 mt-2">
+                  <span className="text-2xl text-slate-500 line-through font-bold">{(product as any).oldPrice} ج.م</span>
+                  <span className="bg-rose-500/20 text-rose-400 px-3 py-1 rounded-lg font-black text-sm border border-rose-500/20">
+                    خصم {Math.round((((product as any).oldPrice - product.price) / (product as any).oldPrice) * 100)}%
+                  </span>
+                </div>
+              )}
             </div>
 
             <p className="text-lg text-slate-400 leading-relaxed mb-10 font-medium">

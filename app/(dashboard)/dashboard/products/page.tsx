@@ -2,6 +2,7 @@ import { ProductRepository } from "@/lib/repositories/product.repository";
 import { deleteProductAction } from "@/lib/actions/product.actions";
 import Link from "next/link";
 import { PlusCircle, Edit, Trash2, Package } from "lucide-react";
+import Image from "next/image";
 
 export const revalidate = 0;
 
@@ -34,10 +35,9 @@ export default async function ProductsDashboardPage() {
             <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 blur-3xl group-hover:bg-blue-500/10 transition-colors pointer-events-none" />
             
             <div className="flex items-start justify-between mb-6 relative z-10">
-              <div className="w-20 h-20 rounded-2xl bg-slate-50 dark:bg-white/5 text-blue-600 dark:text-blue-500 flex items-center justify-center border border-slate-100 dark:border-white/5 overflow-hidden shadow-inner group-hover:scale-105 transition-transform duration-500">
+              <div className="relative w-20 h-20 rounded-2xl bg-slate-50 dark:bg-white/5 text-blue-600 dark:text-blue-500 flex items-center justify-center border border-slate-100 dark:border-white/5 overflow-hidden shadow-inner group-hover:scale-105 transition-transform duration-500">
                 {product.images?.length > 0 ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal" />
+                  <Image src={product.images[0]} alt={product.name} fill className="object-cover mix-blend-multiply dark:mix-blend-normal" />
                 ) : (
                   <Package size={32} />
                 )}
@@ -61,8 +61,20 @@ export default async function ProductsDashboardPage() {
               <h3 className="text-lg font-black text-slate-800 dark:text-white mb-1 line-clamp-1">{product.name}</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-1 font-medium">{product.description}</p>
               
-              <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 mb-6 drop-shadow-sm">
-                {product.price} <span className="text-sm">ج.م</span>
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 drop-shadow-sm">
+                  {product.price} <span className="text-sm">ج.م</span>
+                </div>
+                {(product as any).oldPrice && (product as any).oldPrice > product.price && (
+                  <>
+                    <div className="text-sm text-slate-400 dark:text-slate-500 line-through font-bold">
+                      {(product as any).oldPrice} ج.م
+                    </div>
+                    <div className="text-xs bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold px-2 py-1 rounded-lg">
+                      خصم {Math.round((((product as any).oldPrice - product.price) / (product as any).oldPrice) * 100)}%
+                    </div>
+                  </>
+                )}
               </div>
               
               <div className="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-5">

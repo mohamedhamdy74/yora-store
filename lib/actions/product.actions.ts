@@ -9,6 +9,8 @@ export async function createProductAction(formData: FormData) {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
+    const oldPriceRaw = formData.get("oldPrice") as string | null;
+    const oldPrice = oldPriceRaw && !isNaN(parseFloat(oldPriceRaw)) ? parseFloat(oldPriceRaw) : null;
     const stock = parseInt(formData.get("stock") as string, 10);
     const categoryId = formData.get("categoryId") as string;
     
@@ -24,6 +26,7 @@ export async function createProductAction(formData: FormData) {
       name,
       description,
       price,
+      oldPrice,
       stock,
       categoryId,
       images,
@@ -67,6 +70,8 @@ export async function updateProductAction(id: string, formData: FormData) {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
+    const oldPriceRaw = formData.get("oldPrice") as string | null;
+    const oldPrice = oldPriceRaw && !isNaN(parseFloat(oldPriceRaw)) ? parseFloat(oldPriceRaw) : null;
     const stock = parseInt(formData.get("stock") as string, 10);
     const categoryId = formData.get("categoryId") as string;
     
@@ -81,6 +86,7 @@ export async function updateProductAction(id: string, formData: FormData) {
       name,
       description,
       price,
+      oldPrice,
       stock,
       categoryId,
       images,

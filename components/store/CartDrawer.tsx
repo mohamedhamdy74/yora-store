@@ -3,6 +3,7 @@
 import { useCart } from "./CartContext";
 import { X, Trash2, Plus, Minus, ShoppingCart, MessageCircle, MapPin, User, Phone, Tag } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 export function CartDrawer({ whatsappNumber = "201000000000" }: { whatsappNumber?: string }) {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
@@ -94,10 +95,9 @@ ${orderDetails}
             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {cart.map(item => (
                 <div key={item.id} className="bg-white/5 border border-white/5 rounded-2xl p-4 flex gap-4 relative group">
-                  <div className="w-20 h-20 rounded-xl bg-black/50 overflow-hidden border border-white/10 shrink-0 flex items-center justify-center">
+                  <div className="relative w-20 h-20 rounded-xl bg-black/50 overflow-hidden border border-white/10 shrink-0 flex items-center justify-center">
                     {item.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      <Image src={item.image} alt={item.name} fill className="object-cover" />
                     ) : (
                       <Tag size={20} className="text-slate-600" />
                     )}

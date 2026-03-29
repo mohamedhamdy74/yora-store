@@ -4,6 +4,7 @@ import { Pagination } from "@/components/dashboard/Pagination";
 import { StoreFilters } from "@/components/store/StoreFilters";
 import Link from "next/link";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "تصفح المنتجات - Yora Store",
@@ -54,12 +55,14 @@ export default async function ProductsStorePage(props: {
             >
               <div className="relative aspect-square w-full bg-[#080d17] overflow-hidden p-6 flex flex-col items-center justify-center">
                 {product.images?.[0] ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img 
-                    src={product.images[0]} 
-                    alt={product.name} 
-                    className="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-3"
-                  />
+                  <div className="relative w-full h-full filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-3">
+                    <Image 
+                      src={product.images[0]} 
+                      alt={product.name} 
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center shrink-0">
                     <span className="text-slate-800 select-none font-black text-6xl opacity-30 -rotate-12 group-hover:scale-110 transition-transform duration-700">YORA</span>
@@ -78,11 +81,19 @@ export default async function ProductsStorePage(props: {
                   {product.description}
                 </p>
                 <div className="mt-auto flex items-center justify-between">
-                  <span className="text-3xl font-black text-white flex items-end gap-1">
-                    {product.price} <span className="text-base text-blue-500 mb-1">ج.م</span>
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-3xl font-black text-white flex items-end gap-1">
+                      {product.price} <span className="text-base text-blue-500 mb-1">ج.م</span>
+                    </span>
+                    {(product as any).oldPrice && (product as any).oldPrice > product.price && (
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-sm text-slate-500 line-through">{(product as any).oldPrice}</span>
+                        <span className="text-xs bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-md font-bold text-nowrap">خصم {Math.round((((product as any).oldPrice - product.price) / (product as any).oldPrice) * 100)}%</span>
+                      </div>
+                    )}
+                  </div>
                   
-                  <button className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 hover:scale-110">
+                  <button className="w-14 h-14 shrink-0 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 hover:scale-110">
                     <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
                   </button>
                 </div>
