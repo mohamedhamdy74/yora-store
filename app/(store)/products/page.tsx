@@ -32,7 +32,7 @@ export default async function ProductsStorePage(props: {
       
       {/* Mini Header & Breadcrumb */}
       <div className="bg-[#0B1120] border-b border-white/5 pt-28 pb-12 relative overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none transform-gpu" />
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-black mb-4">التشكيلة الكاملة</h1>
           <p className="text-slate-400 font-medium">كل ما تحتاجه لجوالك في مكان واحد وبأفضل جودة ممكنة.</p>
@@ -50,7 +50,7 @@ export default async function ProductsStorePage(props: {
             <Link 
               href={`/product/${product.id}`}
               key={product.id} 
-              className="bg-[#0a0f1c]/50 backdrop-blur-xl border border-white/5 rounded-3xl overflow-hidden group hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_-15px_rgba(59,130,246,0.25)] flex flex-col animate-in fade-in slide-in-from-bottom-10"
+              className="bg-[#0a0f1c]/50 backdrop-blur-md border border-white/5 rounded-3xl overflow-hidden group hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_-15px_rgba(59,130,246,0.25)] flex flex-col animate-in fade-in slide-in-from-bottom-10 transform-gpu"
               style={{ animationFillMode: "both", animationDelay: `${(i % 4) * 100}ms`, animationDuration: "800ms" }}
             >
               <div className="relative aspect-square w-full bg-[#080d17] overflow-hidden p-6 flex flex-col items-center justify-center">

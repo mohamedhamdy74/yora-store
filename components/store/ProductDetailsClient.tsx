@@ -62,16 +62,12 @@ ${formData.address}
   return (
     <div className="relative overflow-hidden min-h-[100vh] pb-20">
 
-      {/* Background Animated Blobs specific to this product using framer-motion */}
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-        className="absolute top-[20%] -right-[15%] w-[45rem] h-[45rem] bg-blue-600/30 rounded-full blur-[140px] pointer-events-none"
+      {/* Background Blobs (Static for much better scroll performance) */}
+      <div
+        className="absolute top-[20%] -right-[15%] w-[45rem] h-[45rem] bg-blue-600/30 rounded-full blur-[100px] pointer-events-none transform-gpu"
       />
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-[0%] -left-[10%] w-[35rem] h-[35rem] bg-purple-600/20 rounded-full blur-[140px] pointer-events-none"
+      <div
+        className="absolute bottom-[0%] -left-[10%] w-[35rem] h-[35rem] bg-purple-600/20 rounded-full blur-[100px] pointer-events-none transform-gpu"
       />
 
       <div className="container mx-auto px-6 pt-10 relative z-10">
@@ -96,9 +92,7 @@ ${formData.address}
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
               {hasImages ? (
-                <motion.div
-                  animate={{ y: [0, -25, 0], rotate: [0, 2, 0] }}
-                  transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+                <div
                   className="relative w-full h-full filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:scale-110 transition-transform duration-700 z-10"
                 >
                   <Image
@@ -107,15 +101,13 @@ ${formData.address}
                     fill
                     className="object-contain"
                   />
-                </motion.div>
+                </div>
               ) : (
-                <motion.div
-                  animate={{ y: [0, -20, 0] }}
-                  transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+                <div
                   className="text-slate-700 font-black text-6xl opacity-30 -rotate-12 select-none"
                 >
                   YORA
-                </motion.div>
+                </div>
               )}
 
               {/* Gallery Controls */}

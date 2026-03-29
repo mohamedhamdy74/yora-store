@@ -57,8 +57,8 @@ export default function LoginPage() {
       
       {/* Background Gradients (Pure Tailwind & Framer Motion) */}
       <div className="absolute top-0 left-0 w-full h-full bg-[length:60px_60px] bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] pointer-events-none" />
-      <motion.div animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.2, 1] }} transition={{ duration: 10, repeat: Infinity }} className="absolute -top-[20%] right-[-10%] w-[40rem] h-[40rem] bg-blue-600/20 blur-[150px] rounded-full pointer-events-none" />
-      <motion.div animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }} transition={{ duration: 12, repeat: Infinity, delay: 2 }} className="absolute bottom-[0%] left-[-10%] w-[30rem] h-[30rem] bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -top-[20%] right-[-10%] w-[40rem] h-[40rem] bg-blue-600/20 blur-[80px] rounded-full pointer-events-none transform-gpu" />
+      <div className="absolute bottom-[0%] left-[-10%] w-[30rem] h-[30rem] bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none transform-gpu" />
 
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
@@ -71,7 +71,7 @@ export default function LoginPage() {
         </Link>
 
         {/* Sophisticated Glass Login Card */}
-        <div className="bg-[#0A0F1C]/40 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] relative overflow-hidden group">
+        <div className="bg-[#0A0F1C]/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] relative overflow-hidden group transform-gpu">
           
           {/* Edge Glow mapped to top perimeter */}
           <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent group-hover:via-blue-400/80 transition-colors duration-500" />
